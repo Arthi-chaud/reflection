@@ -1,0 +1,42 @@
+name: reflection-json-parser-benchmark-server
+version: 0.1.0.0
+github: "githubuser/haskell"
+license: BSD-3-Clause
+author: "Author name here"
+maintainer: "example@example.com"
+copyright: "2025 Author name here"
+
+extra-source-files: []
+
+dependencies:
+  - base >= 4.7 && < 5
+
+default-extensions:
+  - OverloadedStrings
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Widentities
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wmissing-export-lists
+  - -Wmissing-home-modules
+  - -Wpartial-fields
+  - -Wredundant-constraints
+
+executables:
+  haskell-server:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - reflection-json-parser
+      - scotty
+      - aeson
+      - bytestring
+      - deepseq
+      - flatparse

@@ -1,0 +1,75 @@
+name: reflection-json-parser
+version: 0.1.0.0
+github: "githubuser/reflection-json-parser"
+license: BSD-3-Clause
+author: "Author name here"
+maintainer: "example@example.com"
+copyright: "2025 Author name here"
+
+extra-source-files:
+  - README.md
+
+description: Please see the README on GitHub at <https://github.com/githubuser/reflection-json-parser#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+  - bytestring
+
+default-extensions:
+  - AllowAmbiguousTypes
+  - LambdaCase
+  - MultiParamTypeClasses
+  - RankNTypes
+  - ScopedTypeVariables
+  - TypeApplications
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Widentities
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wmissing-export-lists
+  - -Wmissing-home-modules
+  - -Wpartial-fields
+  - -Wredundant-constraints
+
+library:
+  source-dirs: src
+  dependencies:
+    - megaparsec
+    - flatparse
+    - template-haskell
+    - reflection-base
+tests:
+  json-parser-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - hspec
+      - reflection-json-parser
+      - flatparse
+      - bytestring
+benchmarks:
+  micro:
+    main: Main.hs
+    source-dirs: benchmark/
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-T
+      - -O2
+      - -Wno-unused-top-binds
+      - -Wno-orphans
+      - -Wno-redundant-constraints
+    dependencies:
+      - reflection-json-parser
+      - bytestring
+      - flatparse
+      - criterion
+      - aeson
+      - deepseq

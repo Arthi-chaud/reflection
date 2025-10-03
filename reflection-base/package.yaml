@@ -1,0 +1,44 @@
+name: reflection-base
+version: 0.1.0.0
+github: "githubuser/reflection"
+license: BSD-3-Clause
+author: "Author name here"
+maintainer: "example@example.com"
+copyright: "2025 Author name here"
+
+description: Please see the README on GitHub at <https://github.com/githubuser/reflection#readme>
+
+dependencies:
+  - base >= 4.7 && < 5
+  - template-haskell
+
+default-extensions:
+  - LambdaCase
+  - TemplateHaskell
+  - RankNTypes
+
+ghc-options:
+  - -Wall
+  - -Wcompat
+  - -Widentities
+  - -Wincomplete-record-updates
+  - -Wincomplete-uni-patterns
+  - -Wmissing-export-lists
+  - -Wmissing-home-modules
+  - -Wpartial-fields
+  - -Wredundant-constraints
+
+library:
+  source-dirs: src
+
+tests:
+  reflection-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+    dependencies:
+      - reflection-base
+      - hspec

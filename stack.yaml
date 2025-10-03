@@ -1,0 +1,9 @@
+resolver: nightly-2025-09-10
+system-ghc: true
+packages:
+  - reflection-base
+  - reflection-serialiser
+  - reflection-json-parser
+  - benchmarks/parser-server/haskell
+extra-deps:
+  - flatparse-0.5.3.0

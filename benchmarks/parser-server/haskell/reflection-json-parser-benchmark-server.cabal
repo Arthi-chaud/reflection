@@ -1,0 +1,40 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           reflection-json-parser-benchmark-server
+version:        0.1.0.0
+homepage:       https://github.com/githubuser/haskell#readme
+bug-reports:    https://github.com/githubuser/haskell/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2025 Author name here
+license:        BSD-3-Clause
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/haskell
+
+executable haskell-server
+  main-is: Main.hs
+  other-modules:
+      Paths_reflection_json_parser_benchmark_server
+  autogen-modules:
+      Paths_reflection_json_parser_benchmark_server
+  hs-source-dirs:
+      app
+  default-extensions:
+      OverloadedStrings
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , bytestring
+    , deepseq
+    , flatparse
+    , reflection-json-parser
+    , scotty
+  default-language: Haskell2010

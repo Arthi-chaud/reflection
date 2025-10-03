@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reflection Benchmark</title>
+</head>
+
+<body>
+	<main>
+		<h1>JSON Parser Benchmark</h1>
+		<form action="" id="form">
+			<div>
+				<label for="number">Array Size</label>
+				<input type="number" id="number" name="number" required value="10" />
+			</div>
+			<div>
+				<label for="name">String</label>
+				<input type="text" id="name" name="name" required value="Hello World" />
+
+			</div>
+			<div>
+				Boolean:
+				<select name="boolean" id="boolean" form="form">
+					<option value="false">False</option>
+					<option value="true">True</option>
+				</select>
+			</div>
+			<div>
+				Sent to Haskell server:
+				<button type="submit" name="aeson">Using Aeson</button>
+				<button type="submit" name="reflection">Using Reflection</button>
+			</div>
+		</form>
+		<hr />
+		<div id="payload_sent_container"></div>
+		<div id="rtt_container"></div>
+		<div id="handle_time_container"></div>
+	</main>
+</body>
+<script>
+	function fmtNumber(n) {
+		return n.toLocaleString(undefined, {minumumFactionDigits: 3})
+	}
+	async function logSubmit(event) {
+		event.preventDefault();
+		const route = event.submitter.name
+		const number = parseInt(event.target[0].value)
+		const name = event.target[1].value
+		const boolean = event.target[2].value === 'true'
+		const payload = Array(number).fill({name, boolean})
+		const str_payload = JSON.stringify(payload)
+		document.getElementById("payload_sent_container")
+			.textContent = `Sent an array of ${number} elements to the server`
+		const startTime = performance.now()
+		const res = await fetch("/" + route, {
+			method: "POST",
+			body: str_payload
+		})
+		const endTime = performance.now()
+		const {computationTime} = await res.json()
+		document.getElementById("rtt_container").textContent = `Round trip time: ${fmtNumber(endTime - startTime)} ms`
+
+		document.getElementById("handle_time_container").textContent = `Server's handler execution time: ${fmtNumber(computationTime * 1000)}ms`
+	}
+
+	const form = document.getElementById("form");
+	form.addEventListener("submit", logSubmit);
+</script>
+
+</html>
