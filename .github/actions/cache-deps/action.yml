@@ -1,0 +1,33 @@
+# Took from here: https://github.com/commercialhaskell/stack/issues/5754#issuecomment-1696156869
+name: "Cache"
+description: "Setup tooling and dependencies using cache"
+inputs:
+  ghc-version:
+    description: "Version of GHC to Setup"
+    required: true
+    default: 9.12.2
+runs:
+  using: "composite"
+  steps:
+    - name: Cache GHC installation
+      uses: actions/cache@v3
+      id: ghc
+      with:
+        path: ~/.stack/programs/*/ghc-*
+        key: stack-ghc-${{ inputs.ghc-version }}
+    - name: Install GHC using Stack
+      shell: sh
+      if: steps.ghc.outputs.cache-hit != 'true'
+      run: stack setup  ${{ inputs.ghc-version }} --install-ghc
+    - name: Cache Haskell dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.stack/stack.sqlite3
+          ~/.stack/snapshots
+        key: stack-deps-${{ inputs.ghc-version }}-${{ hashFiles('stack.yaml.lock') }}
+        restore-keys: |
+          stack-deps-${{ inputs.ghc-version }}-
+    - name: Install Stack
+      shell: bash
+      run: curl -sSL https://get.haskellstack.org/ | sh -s - -f
