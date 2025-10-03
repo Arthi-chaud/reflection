@@ -31,7 +31,10 @@ jobs:
         with:
           filters: |
             reflection:
-              - '**'
+              - '**/src/**'
+              - '**/test/**'
+              - '**/bench*/**'
+              - '.github/**'
   Build:
     needs: changes
     if: ${{ needs.changes.outputs.reflection == 'true' }}
