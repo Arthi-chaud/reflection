@@ -1,0 +1,65 @@
+cabal-version: 2.2
+
+-- This file has been generated from package.yaml by hpack version 0.37.0.
+--
+-- see: https://github.com/sol/hpack
+
+name:           rtt
+version:        0.1.0.0
+description:    Please see the README on GitHub at <https://github.com/githubuser/rtt#readme>
+homepage:       https://github.com/githubuser/rtt#readme
+bug-reports:    https://github.com/githubuser/rtt/issues
+author:         Author name here
+maintainer:     example@example.com
+copyright:      2025 Author name here
+license:        BSD-3-Clause
+build-type:     Simple
+
+source-repository head
+  type: git
+  location: https://github.com/githubuser/rtt
+
+library
+  exposed-modules:
+      Lib
+  other-modules:
+      Paths_rtt
+  autogen-modules:
+      Paths_rtt
+  hs-source-dirs:
+      src
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints
+  build-depends:
+      aeson
+    , base >=4.7 && <5
+    , deepseq
+    , reflection-json-parser
+    , reflection-serialiser
+  default-language: Haskell2010
+
+benchmark rtt
+  type: exitcode-stdio-1.0
+  main-is: Main.hs
+  other-modules:
+      Paths_rtt
+  autogen-modules:
+      Paths_rtt
+  hs-source-dirs:
+      benchmark
+  ghc-options: -Wall -Wcompat -Widentities -Wincomplete-record-updates -Wincomplete-uni-patterns -Wmissing-export-lists -Wmissing-home-modules -Wpartial-fields -Wredundant-constraints -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      HTTP
+    , aeson
+    , base >=4.7 && <5
+    , bytestring
+    , criterion
+    , deepseq
+    , flatparse
+    , network-uri
+    , reflection-json-parser
+    , reflection-serialiser
+    , rtt
+    , servant
+    , servant-server
+    , warp
+  default-language: Haskell2010
