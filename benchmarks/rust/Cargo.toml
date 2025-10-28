@@ -6,6 +6,7 @@ edition = "2024"
 [dependencies]
 serde_json = "1.0.145"
 serde = "*"
+nom = "*"
 
 [dev-dependencies]
 criterion = { version = "0.5" }
