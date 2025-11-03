@@ -43,13 +43,13 @@ pub fn parse_benchmark(c: &mut Criterion) {
     };
     let obj = refl_serialise(&book);
 
-    // group.bench_with_input(BenchmarkId::new("object/refl", 0), &obj, |b, obj_| {
-    //     b.iter_with_large_drop(|| refl_parse::<Book>(obj_));
-    // });
-    // group.bench_with_input(BenchmarkId::new("object/serde", 0), &obj, |b, obj_| {
-    //     b.iter_with_large_drop(|| serde_parse::<Book>(obj_));
-    // });
-    //
+    group.bench_with_input(BenchmarkId::new("object/refl", 0), &obj, |b, obj_| {
+        b.iter_with_large_drop(|| refl_parse::<Book>(obj_));
+    });
+    group.bench_with_input(BenchmarkId::new("object/serde", 0), &obj, |b, obj_| {
+        b.iter_with_large_drop(|| serde_parse::<Book>(obj_));
+    });
+
     for i in vec![1, 10, 50, 100].iter() {
         let mut author = Author {
             name: "John Doe".to_owned(),
@@ -112,5 +112,5 @@ pub fn serialise_benchmark(c: &mut Criterion) {
     group.finish();
 }
 
-criterion_group!(benches, parse_benchmark); // TODO Add serialiser
+criterion_group!(benches, parse_benchmark, serialise_benchmark);
 criterion_main!(benches);
