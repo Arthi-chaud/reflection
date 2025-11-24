@@ -9,23 +9,57 @@ import (
 
 type Book struct {
 	Name         string `json:"name"`
-	Page_count   int32  `json:"page_count"`
-	Rating       int32  `json:"rating"`
-	Release_year int32  `json:"release_year"`
+	Page_count   int64  `json:"page_count"`
+	Rating       int64  `json:"rating"`
+	Release_year int64  `json:"release_year"`
 }
 
-var numberParser = gomme.Map(gomme.Digit1[string](), func(s string) (int32, error) {
-	res, err := strconv.ParseInt(string(s), 10, 32)
+var numberParser = gomme.Map(gomme.Digit1[string](), func(s string) (int64, error) {
+	res, err := strconv.ParseInt(string(s), 10, 64)
 	if err != nil {
 		return 0, err
 	}
-	return int32(res), nil
+	return int64(res), nil
 })
 
 var t1 = "\"name\":\""
 var t2 = "\"page_count\":"
 var t3 = "\"rating\":"
 var t4 = "\"release_year\":"
+
+func SerialiseBook(b Book) []byte {
+	buf := make([]byte, 0, 100)
+	buf = append(buf, "{\"name\":\""...)
+	buf = append(buf, []byte(b.Name)...)
+	buf = append(buf, "\",\"page_count\":"...)
+	buf = strconv.AppendInt(buf, b.Page_count, 10)
+	buf = append(buf, ",\"rating\":"...)
+	buf = strconv.AppendInt(buf, b.Rating, 10)
+	buf = append(buf, ",\"release_year\":"...)
+	buf = strconv.AppendInt(buf, b.Release_year, 10)
+	buf = append(buf, "}"...)
+	return buf
+}
+
+func SerialiseBooks(bs []Book) []byte {
+	sbooks := make([][]byte, len(bs))
+	sbooksLen := 0
+
+	for i, b := range bs {
+		sbooks[i] = SerialiseBook(b)
+		sbooksLen += len(sbooks[i])
+	}
+	s := make([]byte, 2+len(bs)-1+sbooksLen)
+	s = append(s, "{"...)
+	for i, b := range sbooks {
+		s = append(s, b...)
+		if i < len(sbooks)-1 {
+			s = append(s, ","...)
+		}
+	}
+	s = append(s, "}"...)
+	return s
+}
 
 func ParseBook(s string) (Book, string) {
 	book := Book{}

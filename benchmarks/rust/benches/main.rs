@@ -1,9 +1,6 @@
-mod data;
-
 use criterion::{BenchmarkId, Criterion, criterion_group, criterion_main};
+use lib::{Author, Book, ReflParsable, ReflSerialisable};
 use serde::{Deserialize, Serialize};
-
-use crate::data::{Author, Book, ReflParsable, ReflSerialisable};
 
 fn serde_serialise<T: Serialize>(obj: &T) -> String {
     serde_json::to_string(obj).unwrap()

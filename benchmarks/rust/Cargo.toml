@@ -1,16 +1,18 @@
 [package]
-name = "reflection-rs"
+name = "lib"
 version = "0.1.0"
 edition = "2024"
 
-[dependencies]
-serde_json = "1.0.145"
-serde = "*"
-nom = "*"
+[lib]
+test = false
 
 [dev-dependencies]
-criterion = { version = "0.5" }
+criterion = { version = "0.5", features = [] }
 
+[dependencies]
+serde_json = "1.0.145"
+serde = { version = "*", features = ['derive'] }
+nom = "*"
 
 [[bench]]
 name = "main"

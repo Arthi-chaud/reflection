@@ -2,7 +2,6 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE LambdaCase #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE StandaloneDeriving #-}
@@ -26,7 +25,6 @@ import Data.Maybe (fromMaybe)
 import Data.Reflection.Serialiser
 import Data.Reflection.Serialiser.Format.JSON
 import qualified Data.Reflection.Serialiser.Format.JSON as R
-import Debug.Trace
 import FlatParse.Basic hiding (Parser)
 import GHC.Generics
 import Lib
