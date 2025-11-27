@@ -86,7 +86,14 @@ genFromJSON n = do
             ]
 
 genParser :: Name -> Type -> Q Exp
-genParser fieldSwitchName (ADT _ [RecordCons conN fields]) =
+genParser fieldSwitchName t = do
+    (conN, fields) <- case t of
+        (ADT _ [RecordCons conN fields]) -> return (conN, fields)
+        (ADT _ [SimpleCons conN []]) -> return (conN, [])
+        e -> fail $ "Unsupported data type" ++ show e
+    let
+        binaryFieldCountLit = IntegerL $ fromIntegral $ getBinaryFieldCount $ length fields
+        emptyObjectExp = RecConE conN []
     [|
         let {-# INLINE go #-}
             go = $(varE fieldSwitchName) $ do
@@ -115,13 +122,13 @@ genParser fieldSwitchName (ADT _ [RecordCons conN fields]) =
                 $(B.char '}') B.<|> B.err (ExpectedToken '}')
                 return obj
         |]
-  where
-    binaryFieldCountLit = IntegerL $ fromIntegral $ getBinaryFieldCount $ length fields
-    emptyObjectExp = RecConE conN []
-genParser _ _ = fail "Unsupported data type"
 
 genFieldSwitchExp :: Type -> Q Exp
-genFieldSwitchExp (ADT _ [RecordCons _ fields]) =
+genFieldSwitchExp t = do
+    fields <- case t of
+        (ADT _ [RecordCons _ fields]) -> return fields
+        (ADT _ [SimpleCons _ []]) -> return []
+        _ -> fail "Unsupported data type"
     let fieldNames = fst <$> fields
         contName = mkName "cont"
         caseBranches :: [(Name, Q Exp)]
@@ -162,7 +169,6 @@ genFieldSwitchExp (ADT _ [RecordCons _ fields]) =
                 caseBranches
                     <&> \(fieldName, expr) -> match (litP $ stringL $ printf "\"%s\"" $ nameBase fieldName) (normalB expr) []
      in lamE [varP contName] (switch caseExp)
-genFieldSwitchExp _ = fail "Unsupported data type"
 
 getTyConAndArgs :: Name -> Q (Name, [Name])
 getTyConAndArgs tyName = do

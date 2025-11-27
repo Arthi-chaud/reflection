@@ -16,6 +16,7 @@ data Type
         -- | The name of the type
         Name
     | List TH.Type
+    deriving (Show)
 
 -- | A data constructor
 data Constructor
@@ -26,6 +27,7 @@ data Constructor
         Name
         -- | Types of the fields, in the fields' declaration order
         [TH.Type]
+    deriving (Show)
 
 conName :: Constructor -> Name
 conName = \case

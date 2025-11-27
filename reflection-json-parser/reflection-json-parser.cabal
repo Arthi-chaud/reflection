@@ -26,6 +26,7 @@ library
       Data.JSON.FromJSON
       Data.JSON.Parser.Array
       Data.JSON.Parser.Base
+      Data.JSON.Parser.Any
       Data.JSON.Parser.Internal
       Data.JSON.TH
   other-modules:
