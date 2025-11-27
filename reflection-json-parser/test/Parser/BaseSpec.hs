@@ -5,7 +5,6 @@ module Parser.BaseSpec (spec) where
 import Data.ByteString
 import Data.JSON.Parser.Array
 import Data.JSON.Parser.Base
-import FlatParse.Basic hiding (Parser)
 import Test.Hspec
 
 spec :: Spec

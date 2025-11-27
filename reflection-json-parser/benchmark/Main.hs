@@ -11,9 +11,8 @@ import qualified Data.Aeson as Aeson
 import Data.ByteString
 import Data.Functor
 import Data.JSON.FromJSON
-import Data.JSON.Parser.Base (Error (..))
+import Data.JSON.Parser.Base (Error (..), Result (..), runParser)
 import Data.JSON.TH (genFromJSON)
-import FlatParse.Basic hiding (Parser)
 import GHC.Generics (Generic, Generic1)
 import Text.Printf
 

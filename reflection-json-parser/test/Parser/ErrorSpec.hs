@@ -5,7 +5,6 @@ module Parser.ErrorSpec (spec) where
 import Data.ByteString
 import Data.JSON.FromJSON
 import Data.JSON.Parser.Base
-import FlatParse.Basic hiding (Parser)
 import Test.Hspec
 import Text.Printf (printf)
 

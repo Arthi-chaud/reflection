@@ -2,10 +2,21 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE Strict #-}
 {-# LANGUAGE TemplateHaskell #-}
-{-# OPTIONS_GHC -Wno-missing-export-lists #-}
 {-# OPTIONS_GHC -Wno-redundant-constraints #-}
 
-module Data.JSON.Parser.Base where
+module Data.JSON.Parser.Base (
+    Parser,
+    Error (..),
+    parseBool,
+    parseNull,
+    parseString,
+    parseDouble,
+    parseIntegral,
+
+    -- * From Flatparse
+    runParser,
+    Result (..),
+) where
 
 import Control.Monad (replicateM)
 import Data.Char (chr, digitToInt, isHexDigit, readLitChar)
